@@ -10,12 +10,12 @@ html {
 
 body {
     font-family: 'Open Sans', sans-serif;
-    padding-top: 75px; 
+    padding-top: 55px; 
 }
 
 
 .header {
-    height: 75px;
+    height: 55px;
     width: 100%;
     background-color: wheat;
     border-top: 5px solid #ff4d6d;
@@ -26,7 +26,7 @@ body {
     z-index: 1000;
     
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     padding-bottom: 0;     
 
     border-bottom-left-radius: 20px;
@@ -57,7 +57,7 @@ body {
 }
 
 .logo img {
-    height: 55px; 
+    height: 40px; 
     width: auto;
     object-fit: contain; 
 }
@@ -89,7 +89,7 @@ body {
 .panel {
     display: none; 
     position: absolute;
-    top: 75px; 
+    top: 55px; 
     left: 0;
     width: 100%;
     height: auto;
@@ -183,14 +183,16 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* MAIN POSTER SLIDER */
+
+/* CONTAINER POSTER - KHÔNG KHAI BÁO NỀN CỐ ĐỊNH TẠI ĐÂY NẾU 3 POSTER KHÁC MÀU NHAU */
 .main-poster {
     width: 100%;
-    max-height: 100vh;
+    height: calc(100vh - 55px);
     overflow: hidden;
     position: relative;
-    user-select: none; /* Tránh bôi đen chữ/ảnh khi kéo chuột */
+    user-select: none;
     cursor: grab;
+    transition: background-color 0.5s ease;
 }
 
 .main-poster:active {
@@ -205,20 +207,27 @@ body {
     will-change: transform;
 }
 
+/* KHỐI CHỨA MỖI SLIDE - ÉP HIỂN THỊ CĂN GIỮA */
 .slide {
     min-width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    pointer-events: none; /* Tránh kéo thả mặc định của trình duyệt */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+/* THẺ ẢNH - BẮT BUỘC KHÔNG BỊ CẮT VỚI !IMPORTANT */
+.slide img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important; /* Ép không bị cắt trên/dưới dưới mọi hình thức */
+    display: block !important;
+    pointer-events: none;
 }
 
 /* Dots chỉ số slide */
@@ -689,4 +698,219 @@ body {
 
 .btn-diamond:hover {
     background-color: #0077b6;
+}
+
+/* PAGE UNDER CONSTRUCTION (NOTFOUND) */
+.under-construction-body {
+    padding-top: 0; /* Ghi đè padding-top 75px của body gốc */
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+}
+
+.under-construction-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.title-bold {
+    font-size: 3rem;
+    font-weight: 800;
+    color: hsl(0, 0%, 0%);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.subtitle-small {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #000000;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+.construction-image img {
+    max-width: 100%;
+    max-height: 450px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* =========================================
+   GIAO DIỆN MOBILE & TABLET (TỪ 768PX TRỞ XUỐNG)
+========================================= */
+
+/* Nút Hamburger */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 20px;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1001;
+}
+
+.hamburger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: hsl(38, 43%, 33%);
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    /* HIỂN THỊ HAMBURGER */
+    .hamburger {
+        display: flex;
+    }
+    
+    /* MENU MOBILE (DẠNG ACCORDION) */
+    .nav {
+        display: none; /* Ẩn mặc định */
+        flex-direction: column;
+        position: absolute;
+        top: 55px;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav.open {
+        display: flex;
+    }
+
+    .nav-item {
+        width: 100%;
+        margin: 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .button {
+        width: 100%;
+        border-radius: 0;
+        justify-content: flex-start;
+        padding: 15px 30px;
+        height: auto;
+        font-size: 1.1rem;
+    }
+
+    /* Đổi Panel từ Float (Absolute) thành Accordion (Static) để đẩy content bên dưới */
+    .panel {
+        position: static;
+        box-shadow: none;
+        border-bottom: none;
+        padding: 15px 30px;
+        background-color: #fafafa;
+    }
+
+    /* Fix các layout đa cột trong Panel */
+    .panel-layout-70-30 {
+        flex-direction: column;
+    }
+    .panel-left, .panel-right {
+        width: 100%;
+    }
+    .panel-divider {
+        width: 100%;
+        height: 1px;
+        margin: 15px 0;
+    }
+    .grid-links {
+        grid-template-columns: 1fr; /* Trở thành 1 cột */
+    }
+
+    /* CONCEPT POSTER: Chiếm 40% chiều cao màn hình (2/5 ảnh trở xuống là nội dung) */
+    .main-poster {
+        height: 40vh;
+    }
+    
+    /* SECTION GIỚI THIỆU CHUNG (Dọc) */
+    .about-container {
+        flex-direction: column;
+        height: auto;
+        border-radius: 0;
+    }
+    .about-image {
+        width: 100%;
+        height: 300px;
+    }
+    .about-content {
+        width: 100%;
+        padding: 30px 20px;
+    }
+
+    /* SECTION CƠ HỘI NGHỀ NGHIỆP (Dọc) */
+    .career-container {
+        flex-direction: column;
+        height: auto;
+    }
+    .career-left, .career-right-image {
+        width: 100%;
+        height: auto;
+    }
+    .career-info {
+        height: auto;
+        padding: 30px 20px;
+        border-radius: 0;
+    }
+    .branch-stats {
+        flex-direction: column;
+        height: auto;
+        gap: 20px;
+        padding: 30px 20px;
+        border-radius: 0;
+    }
+    .stat-divider {
+        width: 100%;
+        height: 1px;
+    }
+    .career-right-image {
+        height: 350px;
+        border-radius: 0;
+    }
+
+    /* SECTION THẺ HỘI VIÊN (CAROUSEL VUỐT NGANG) */
+    .membership-cards {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory; /* Snap từng component 1 */
+        padding: 10px 20px 40px 20px;
+        gap: 15px;
+        -webkit-overflow-scrolling: touch; /* Vuốt mượt trên iOS */
+    }
+
+    .membership-card {
+        min-width: 85%; /* Chiếm 85% để lộ ra 1 phần thẻ tiếp theo nhằm gợi ý vuốt */
+        scroll-snap-align: center;
+        transform: none !important; /* Hủy hiệu ứng phóng to PC */
+        min-height: 480px;
+    }
+
+    .membership-card.diamond {
+        border: 1px solid #ddd;
+        border-top: 6px solid #00b4d8;
+    }
+    
+    /* Ẩn thanh cuộn xấu xí */
+    .membership-cards::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* HIỆU ỨNG ANIMATION HAMBURGER -> DẤU X */
+.hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
