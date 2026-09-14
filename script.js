@@ -50,7 +50,7 @@ function startAutoSlide() {
     autoSlideTimer = setInterval(() => {
         currentIndex = (currentIndex + 1) % slides.length;
         updateSliderPosition();
-    }, 2000);
+    }, 3500);
 }
 
 function stopAutoSlide() {
@@ -151,3 +151,58 @@ startAutoSlide();
 
 // Cập nhật kích thước khi resize màn hình
 window.addEventListener('resize', updateSliderPosition);
+
+// Thêm danh sách màu nền tương ứng với từng poster (thay mã màu theo ảnh của bạn)
+const slideColors = [
+    '#3d2314',
+    '#ff6088', // Màu dải nền cho Poster 2 (Nâu Cà phê)
+    '#258436'  // Màu dải nền cho Poster 3 (Xanh lục/Đen)
+];
+
+// Cập nhật lại hàm updateSliderPosition
+function updateSliderPosition() {
+    currentTranslate = currentIndex * -slider.clientWidth;
+    prevTranslate = currentTranslate;
+    track.style.transform = `translateX(${currentTranslate}px)`;
+    
+    // Đổi màu nền dải 2 bên theo slide hiện tại
+    slider.style.backgroundColor = slideColors[currentIndex];
+    
+    // Cập nhật trạng thái dots
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+    });
+}
+
+// --- XỬ LÝ HAMBURGER MENU CHO MOBILE ---
+const hamburger = document.querySelector('.hamburger');
+const nav = document.querySelector('.nav');
+const navItems = document.querySelectorAll('.nav-item');
+const navButtons = document.querySelectorAll('.button');
+
+// Click vào hamburger để mở/đóng menu tổng và biến thành dấu X
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    nav.classList.toggle('open');
+});
+
+// Chuyển Hover thành Click đối với mobile
+navButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        // Chỉ áp dụng logic click accordion trên màn hình Mobile (< 768px)
+        if (window.innerWidth <= 768) {
+            e.preventDefault(); // Tránh bị cuộn trang khi bấm
+            const parentItem = btn.parentElement;
+            
+            // Đóng các panel đang mở khác
+            navItems.forEach(item => {
+                if (item !== parentItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Mở/Đóng panel hiện tại
+            parentItem.classList.toggle('active');
+        }
+    });
+});
