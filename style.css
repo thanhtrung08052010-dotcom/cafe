@@ -77,7 +77,7 @@ body {
     display: flex;
     justify-content: center; 
     align-items: center;  
-    transition: 0.2s;   
+    transition: 0.2s;    
 }
 
 .nav-item:hover .button,
